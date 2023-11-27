@@ -17,10 +17,7 @@ if __name__ == "__main__":
 
     for cell in data['cells']:
         if cell['cell_type']=='code' and cell['source']:
-            if "# input-data-definition (DON'T REMOVE THIS COMMENT)" in cell['source'][0]:
-                python_script_file.write(''.join(cell['source']))
-                python_script_file.write('\n\n')
-            if "# input-data-ingestion (DON'T REMOVE THIS COMMENT)" in cell['source'][0]:
+            if "# input-data-ingestion (DON'T REMOVE THIS COMMENT)" in cell['source'][0]:
                 python_script_file.write(''.join(cell['source']))
                 python_script_file.write('\n\n')
             if "# process (DON'T REMOVE THIS COMMENT)" in cell['source'][0]:

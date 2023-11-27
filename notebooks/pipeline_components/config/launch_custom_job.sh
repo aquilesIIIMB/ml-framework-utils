@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while getopts ":m:c:g:n:i:" opt; do
+while getopts ":m:c:g:n:i:s:" opt; do
     case ${opt} in
         m)
             MODEL_NAME=${OPTARG}
@@ -16,6 +16,9 @@ while getopts ":m:c:g:n:i:" opt; do
             ;;
         i)
             CONTAINER_IMAGE_URI=${OPTARG}
+            ;;
+        s)
+            SERVICE_ACCOUNT=${OPTARG}
             ;;
         \?)
             echo "Invalid option: -$OPTARG" 1>&2
@@ -41,11 +44,15 @@ if [[ -n $GPU_MACHINE_CORES ]] && [[ -n $GPU_MACHINE_NAME ]]; then
     gcloud ai custom-jobs create \
       --region=us-central1 \
       --display-name=$JOB_NAME \
+      --service-account=$SERVICE_ACCOUNT \
+      --labels=applicationName={{cookiecutter.applicationName}},gitProject={{cookiecutter.projectName}} \
       --worker-pool-spec="machine-type=$CPU_MACHINE_NAME,accelerator-type=$GPU_MACHINE_NAME,accelerator-count=$GPU_MACHINE_CORES,container-image-uri=$CONTAINER_IMAGE_URI"
 else
     # Execute command without GPU details
     gcloud ai custom-jobs create \
       --region=us-central1 \
       --display-name=$JOB_NAME \
+      --service-account=$SERVICE_ACCOUNT \
+      --labels=applicationName={{cookiecutter.applicationName}},gitProject={{cookiecutter.projectName}} \
       --worker-pool-spec="machine-type=$CPU_MACHINE_NAME,container-image-uri=$CONTAINER_IMAGE_URI"
 fi

@@ -34,3 +34,6 @@ gcloud artifacts repositories create $project_prefix --repository-format=docker 
 docker build --tag $repository/$project/$project_prefix/$app_prefix/$MODEL_NAME/$img_name:$version --build-arg PYTHON_VERSION=$PYTHON_VERSION .
 docker image prune --force
 docker push $repository/$project/$project_prefix/$app_prefix/$MODEL_NAME/$img_name:$version
+
+echo "CONTAINER_IMAGE_URI:"
+echo $repository/$project/$project_prefix/$app_prefix/$MODEL_NAME/$img_name:$version

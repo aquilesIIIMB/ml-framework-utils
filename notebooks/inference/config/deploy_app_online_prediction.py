@@ -51,6 +51,7 @@ def upload_model_sample(
         is_default_version=True,
         model_id=model_id,
         parent_model=parent_model,
+        labels={"applicationName": "{{cookiecutter.applicationName}}", "gitProject": "{{cookiecutter.projectName}}"}
     )
 
     model.wait()
@@ -71,6 +72,7 @@ def create_endpoint_sample(
         display_name=display_name,
         project=project,
         location=location,
+        labels={"applicationName": "{{cookiecutter.applicationName}}", "gitProject": "{{cookiecutter.projectName}}"}
     )
 
     print(endpoint.display_name)
@@ -120,7 +122,7 @@ def deploy_model_with_dedicated_resources_sample(
         explanation_parameters=explanation_parameters,
         metadata=metadata,
         sync=sync,
-        service_account=service_account
+        service_account=service_account,
     )
 
     model.wait()
